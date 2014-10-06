@@ -3,12 +3,10 @@ package com.faizmalkani.floatingactionbutton;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Display;
@@ -23,8 +21,7 @@ public class FloatingActionButton extends View {
 
     private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
     private final Paint mButtonPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Paint mDrawablePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Bitmap mBitmap;
+    private Drawable mIconDrawable;
     private int mColor;
     private int mPressedColor;
     private boolean mHidden = false;
@@ -55,11 +52,9 @@ public class FloatingActionButton extends View {
         dy = a.getFloat(R.styleable.FloatingActionButton_shadowDy, 3.5f);
         int color = a.getInteger(R.styleable.FloatingActionButton_shadowColor, Color.argb(100, 0, 0, 0));
         mButtonPaint.setShadowLayer(radius, dx, dy, color);
-        
-        Drawable drawable = a.getDrawable(R.styleable.FloatingActionButton_drawable);
-        if (null != drawable) {
-            mBitmap = ((BitmapDrawable) drawable).getBitmap();
-        }
+
+        setDrawable(a.getDrawable(R.styleable.FloatingActionButton_drawable));
+
         setWillNotDraw(false);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         
@@ -83,7 +78,10 @@ public class FloatingActionButton extends View {
     }
 
     public void setDrawable(Drawable drawable) {
-        mBitmap = ((BitmapDrawable) drawable).getBitmap();
+        mIconDrawable = drawable;
+        if (drawable != null) {
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        }
         invalidate();
     }
     
@@ -91,9 +89,12 @@ public class FloatingActionButton extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, (float) (getWidth() / 2.6), mButtonPaint);
-        if (null != mBitmap) {
-            canvas.drawBitmap(mBitmap, (getWidth() - mBitmap.getWidth()) / 2,
-                              (getHeight() - mBitmap.getHeight()) / 2, mDrawablePaint);
+        if (mIconDrawable != null) {
+            canvas.save();
+            canvas.translate((getWidth() - mIconDrawable.getIntrinsicWidth()) / 2,
+                    (getHeight() - mIconDrawable.getIntrinsicHeight()) / 2);
+            mIconDrawable.draw(canvas);
+            canvas.restore();
         }
     }
     
