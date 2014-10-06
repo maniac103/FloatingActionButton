@@ -47,9 +47,11 @@ public class FloatingActionButton extends View {
         mButtonPaint.setStyle(Paint.Style.FILL);
         mButtonPaint.setColor(mColor);
         float radius, dx, dy;
-        radius = a.getFloat(R.styleable.FloatingActionButton_shadowRadius, 10.0f);
-        dx = a.getFloat(R.styleable.FloatingActionButton_shadowDx, 0.0f);
-        dy = a.getFloat(R.styleable.FloatingActionButton_shadowDy, 3.5f);
+        radius = a.getDimension(R.styleable.FloatingActionButton_shadowRadius,
+                getResources().getDimension(R.dimen.fab_default_shadow_radius));
+        dx = a.getDimension(R.styleable.FloatingActionButton_shadowDx, 0.0f);
+        dy = a.getDimension(R.styleable.FloatingActionButton_shadowDy,
+                getResources().getDimension(R.dimen.fab_default_shadow_dy));
         int color = a.getInteger(R.styleable.FloatingActionButton_shadowColor, Color.argb(100, 0, 0, 0));
         mButtonPaint.setShadowLayer(radius, dx, dy, color);
 
