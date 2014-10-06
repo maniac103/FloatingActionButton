@@ -55,6 +55,8 @@ public class FloatingActionButton extends View {
 
         setDrawable(a.getDrawable(R.styleable.FloatingActionButton_drawable));
 
+        a.recycle();
+
         setWillNotDraw(false);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         
