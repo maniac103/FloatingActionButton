@@ -5,6 +5,7 @@
         <attr name="drawable" format="integer"/>
         <attr name="color" format="color"/>
         <attr name="pressedColor" format="color"/>
+        <attr name="radius" format="dimension"/>
         <attr name="shadowRadius" format="dimension"/>
         <attr name="shadowDx" format="dimension"/>
         <attr name="shadowDy" format="dimension"/>

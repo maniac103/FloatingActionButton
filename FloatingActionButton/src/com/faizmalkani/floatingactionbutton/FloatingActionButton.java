@@ -22,6 +22,9 @@ public class FloatingActionButton extends View {
     private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
     private final Paint mButtonPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Drawable mIconDrawable;
+    private int mRadius;
+    private int mShadowRadius;
+    private int mShadowOffsetX, mShadowOffsetY;
     private int mColor;
     private int mPressedColor;
     private boolean mHidden = false;
@@ -57,7 +60,14 @@ public class FloatingActionButton extends View {
 
         setDrawable(a.getDrawable(R.styleable.FloatingActionButton_drawable));
 
+        mRadius = a.getDimensionPixelSize(R.styleable.FloatingActionButton_radius,
+                getResources().getDimensionPixelSize(R.dimen.fab_radius));
+
         a.recycle();
+
+        mShadowRadius = (int) Math.ceil(radius);
+        mShadowOffsetX = Math.round(dx);
+        mShadowOffsetY = Math.round(dy);
 
         setWillNotDraw(false);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
@@ -89,14 +99,22 @@ public class FloatingActionButton extends View {
         invalidate();
     }
     
-    
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int size = 2 * mRadius + 2 * mShadowRadius;
+        setMeasuredDimension(size + getPaddingLeft() + getPaddingRight(),
+                size + getPaddingTop() + getPaddingBottom());
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawCircle(getWidth() / 2, getHeight() / 2, (float) (getWidth() / 2.6), mButtonPaint);
+        float centerX = getWidth() / 2 - mShadowOffsetX - (getPaddingRight() - getPaddingLeft()) / 2;
+        float centerY = getHeight() / 2 - mShadowOffsetY - (getPaddingBottom() - getPaddingTop()) / 2;
+        canvas.drawCircle(centerX, centerY, mRadius, mButtonPaint);
         if (mIconDrawable != null) {
             canvas.save();
-            canvas.translate((getWidth() - mIconDrawable.getIntrinsicWidth()) / 2,
-                    (getHeight() - mIconDrawable.getIntrinsicHeight()) / 2);
+            canvas.translate(centerX - mIconDrawable.getIntrinsicWidth() / 2,
+                    centerY - mIconDrawable.getIntrinsicHeight() / 2);
             mIconDrawable.draw(canvas);
             canvas.restore();
         }
