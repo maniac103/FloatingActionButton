@@ -26,6 +26,7 @@ public class FloatingActionButton extends View {
     private final Paint mDrawablePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Bitmap mBitmap;
     private int mColor;
+    private int mPressedColor;
     private boolean mHidden = false;
     /** The FAB button's Y position when it is displayed. */
     private float mYDisplayed = -1;
@@ -45,6 +46,7 @@ public class FloatingActionButton extends View {
         
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton);
         mColor = a.getColor(R.styleable.FloatingActionButton_color, Color.WHITE);
+        mPressedColor = a.getColor(R.styleable.FloatingActionButton_pressedColor, darkenColor(mColor));
         mButtonPaint.setStyle(Paint.Style.FILL);
         mButtonPaint.setColor(mColor);
         float radius, dx, dy;
@@ -75,6 +77,11 @@ public class FloatingActionButton extends View {
         invalidate();
     }
     
+    public void setPressedColor(int color) {
+        mPressedColor = color;
+        invalidate();
+    }
+
     public void setDrawable(Drawable drawable) {
         mBitmap = ((BitmapDrawable) drawable).getBitmap();
         invalidate();
@@ -105,12 +112,7 @@ public class FloatingActionButton extends View {
     
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int color;
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            color = mColor;
-        } else {
-            color = darkenColor(mColor);
-        }
+        int color = event.getAction() == MotionEvent.ACTION_UP ? mColor : mPressedColor;
         mButtonPaint.setColor(color);
         invalidate();
         return super.onTouchEvent(event);
