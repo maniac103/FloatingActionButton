@@ -45,22 +45,22 @@ public class FloatingActionButton extends View {
         super(context, attrs, defStyleAttr);
         
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatingActionButton);
-        mColor = a.getColor(R.styleable.FloatingActionButton_color, Color.WHITE);
-        mPressedColor = a.getColor(R.styleable.FloatingActionButton_pressedColor, darkenColor(mColor));
+        mColor = a.getColor(R.styleable.FloatingActionButton_fab_color, Color.WHITE);
+        mPressedColor = a.getColor(R.styleable.FloatingActionButton_fab_pressedColor, darkenColor(mColor));
         mButtonPaint.setStyle(Paint.Style.FILL);
         mButtonPaint.setColor(mColor);
         float radius, dx, dy;
-        radius = a.getDimension(R.styleable.FloatingActionButton_shadowRadius,
+        radius = a.getDimension(R.styleable.FloatingActionButton_fab_shadowRadius,
                 getResources().getDimension(R.dimen.fab_default_shadow_radius));
-        dx = a.getDimension(R.styleable.FloatingActionButton_shadowDx, 0.0f);
-        dy = a.getDimension(R.styleable.FloatingActionButton_shadowDy,
+        dx = a.getDimension(R.styleable.FloatingActionButton_fab_shadowDx, 0.0f);
+        dy = a.getDimension(R.styleable.FloatingActionButton_fab_shadowDy,
                 getResources().getDimension(R.dimen.fab_default_shadow_dy));
-        int color = a.getInteger(R.styleable.FloatingActionButton_shadowColor, Color.argb(100, 0, 0, 0));
+        int color = a.getInteger(R.styleable.FloatingActionButton_fab_shadowColor, Color.argb(100, 0, 0, 0));
         mButtonPaint.setShadowLayer(radius, dx, dy, color);
 
-        setDrawable(a.getDrawable(R.styleable.FloatingActionButton_drawable));
+        setDrawable(a.getDrawable(R.styleable.FloatingActionButton_fab_drawable));
 
-        mRadius = a.getDimensionPixelSize(R.styleable.FloatingActionButton_radius,
+        mRadius = a.getDimensionPixelSize(R.styleable.FloatingActionButton_fab_radius,
                 getResources().getDimensionPixelSize(R.dimen.fab_radius));
 
         a.recycle();

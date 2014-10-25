@@ -2,14 +2,14 @@
 <resources>
 
     <declare-styleable name="FloatingActionButton">
-        <attr name="drawable" format="integer"/>
-        <attr name="color" format="color"/>
-        <attr name="pressedColor" format="color"/>
-        <attr name="radius" format="dimension"/>
-        <attr name="shadowRadius" format="dimension"/>
-        <attr name="shadowDx" format="dimension"/>
-        <attr name="shadowDy" format="dimension"/>
-        <attr name="shadowColor" format="integer"/>
+        <attr name="fab_drawable" format="integer"/>
+        <attr name="fab_color" format="color"/>
+        <attr name="fab_pressedColor" format="color"/>
+        <attr name="fab_radius" format="dimension"/>
+        <attr name="fab_shadowRadius" format="dimension"/>
+        <attr name="fab_shadowDx" format="dimension"/>
+        <attr name="fab_shadowDy" format="dimension"/>
+        <attr name="fab_shadowColor" format="integer"/>
     </declare-styleable>
 
 </resources>
